@@ -1,0 +1,25 @@
+<MyGrid>:
+
+	base_time: base_time
+
+	GridLayout:
+		cols:1
+		size: root.width - 200, root.height - 200
+		pos: 100, 100
+
+		GridLayout:
+			cols:1
+
+			Label:
+				text: "base_time,example:2020 6 12"
+
+			TextInput:
+				id: base_time
+
+		Button:
+			text:"Baby, do u want to know your next special time?"
+            on_press: root.btn_cal()
+
+        Button:
+			text:"Modify the base_time"
+            on_press: root.btn_modify()

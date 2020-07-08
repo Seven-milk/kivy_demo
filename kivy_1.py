@@ -1,5 +1,5 @@
 # code: utf-8
-# author: "Xudong Zheng" 
+# author: "Xudong Zheng"
 # email: Z786909151@163.com
 import datetime
 import kivy
@@ -8,27 +8,27 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.uix.widget import Widget
+from kivy.properties import ObjectProperty
 
 
-class MyGrid(GridLayout):
-    def __init__(self, **kwargs):
-        super(MyGrid, self).__init__(**kwargs)
-        self.cols = 1
-        self.add_widget(Label(text="how do you feel today", font_size=20))
-        self.feel = TextInput(multiline=False)
-        self.add_widget(self.feel)
+class MyGrid(Widget):
+    base_time = ObjectProperty(None)
 
-        self.time = Button(text=u"Milk baby' special time", font_size=20)
-        self.time.bind(on_press=self.lijia_date)
-        self.add_widget(self.time)
+    def btn_cal(self):
+        with open('start.text', 'r') as f:
+            f_read = f.read().split()
+            start = datetime.date(int(f_read[0]), int(f_read[1]), int(f_read[2]))
 
-    def lijia_date(self, instance):
-        start = datetime.date(2020, 6, 12)
         time_delta = datetime.timedelta(days=28)
         now = datetime.date.today()
         dif = now - start
         date = start + ((dif // time_delta) + 1) * time_delta
-        return date
+        print("下次例假是：{}".format(date))
+
+    def btn_modify(self):
+        with open('start.text', 'w') as f:
+            f.write(self.base_time.text)
 
 
 class MyApp(App):
