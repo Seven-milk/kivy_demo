@@ -30,6 +30,12 @@ class MyGrid(Widget):
         with open('start.text', 'w') as f:
             f.write(self.base_time.text)
 
+    def btn_show(self):
+        with open('start.text', 'r') as f:
+            f_read = f.read().split()
+            base_time = datetime.date(int(f_read[0]), int(f_read[1]), int(f_read[2]))
+            print(base_time)
+
 
 class MyApp(App):
     def build(self):
