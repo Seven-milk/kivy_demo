@@ -26,6 +26,26 @@
 			text:"Modify the base_time"
             on_press: root.btn_modify()
 
-        Button:
-			text:"Show the base_time"
-            on_press: root.btn_show()
+
+
+<P>:
+	Label:
+		text: "baby, your special day is"
+		size_hint: 0.6, 0.2
+		pos_hint: {"x":0.2, "top":1}
+
+	Label:
+	    text: str(root.date)
+	    size_hint: 0.6, 0.2
+		pos_hint: {"x":0.2, "top":0.8}
+
+	Label:
+		text: "base_time is"
+		size_hint: 0.6, 0.2
+		pos_hint: {"x":0.2, "top":0.5}
+
+	Label:
+	    text: str(root.base_time)
+	    size_hint: 0.6, 0.2
+		pos_hint: {"x":0.2, "top":0.3}
+

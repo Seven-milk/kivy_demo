@@ -16,9 +16,30 @@ from kivy.uix.popup import Popup
 
 class MyGrid(Widget):
     base_time = ObjectProperty(None)
-    date = ObjectProperty(None)
 
     def btn_cal(self):
+        show_popup()
+
+    def btn_modify(self):
+        with open('start.text', 'w') as f:
+            f.write(self.base_time.text)
+
+
+class MyApp(App):
+    def build(self):
+        return MyGrid()
+
+
+class P(FloatLayout):
+    date = ObjectProperty(None)
+    base_time = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(FloatLayout, self).__init__(**kwargs)
+        self.date = self.cal()
+        self.base_time = self.show()
+
+    def cal(self):
         with open('start.text', 'r') as f:
             f_read = f.read().split()
             start = datetime.date(int(f_read[0]), int(f_read[1]), int(f_read[2]))
@@ -26,23 +47,20 @@ class MyGrid(Widget):
         time_delta = datetime.timedelta(days=28)
         now = datetime.date.today()
         dif = now - start
-        date = start + ((dif // time_delta) + 1) * time_delta
-        print("下次例假是：{}".format(date))
+        return str(start + ((dif // time_delta) + 1) * time_delta)
 
-    def btn_modify(self):
-        with open('start.text', 'w') as f:
-            f.write(self.base_time.text)
-
-    def btn_show(self):
+    def show(self):
         with open('start.text', 'r') as f:
             f_read = f.read().split()
-            base_time = datetime.date(int(f_read[0]), int(f_read[1]), int(f_read[2]))
-            print(base_time)
+            return str(datetime.date(int(f_read[0]), int(f_read[1]), int(f_read[2])))
 
 
-class MyApp(App):
-    def build(self):
-        return MyGrid()
+def show_popup():
+    show = P()
+
+    popupWindow = Popup(title="Popup Window", content=show, size_hint=(None, None), size=(400, 400))
+
+    popupWindow.open()
 
 
 if __name__ == "__main__":
